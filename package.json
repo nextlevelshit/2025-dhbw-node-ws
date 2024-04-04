@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "nodemon index.js",
     "client": "npx wscat -c \"ws://localhost:8081\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -12,6 +12,7 @@
   "type": "module",
   "license": "ISC",
   "dependencies": {
+    "nodemon": "^3.1.0",
     "ws": "^8.16.0"
   }
 }

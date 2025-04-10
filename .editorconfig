@@ -4,3 +4,9 @@ indent_style = tab
 tab_width = 4
 insert_final_newline = true
 ij_javascript_use_double_quotes = true
+
+[package.json]
+indent_size = tab
+indent_style = tab
+tab_width = 4
+insert_final_newline = true

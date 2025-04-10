@@ -1,27 +1,45 @@
-import { WebSocketServer } from 'ws';
+import {WebSocketServer} from "ws";
 
 const port = process.env.PORT || 8081;
 
-const wss = new WebSocketServer({ port });
+const wss = new WebSocketServer({port});
 
-wss.on('connection', (ws) => {
-    console.log('Client connected');
+wss.on("connection", (ws) => {
+	ws.id = Date.now();
 
-    // Send a welcome message to the client
-    ws.send('Welcome to the real-time app!');
+	console.log(`Client connected ${ws.id}`);
 
-    // Handle messages received from the client
-    ws.on('message', (message) => {
-        console.log(`Received message: ${message}`);
+	// Send a welcome message to the client
+	ws.send("Welcome to the real-time app!");
 
-        // Echo the received message back to the client
-        ws.send(`You said: ${message}`);
-    });
+	wss.clients.forEach(client => {
+		if (client.id !== ws.id && client.readyState === WebSocket.OPEN) {
+			client.send(`${client.id} has joined the chat`);
+		}
+	});
 
-    // Handle disconnection
-    ws.on('close', () => {
-        console.log('Client disconnected');
-    });
+	// Handle messages received from the client
+	ws.on("message", (message) => {
+		console.log(`Received message from ${ws.id}: ${message}`);
+
+		// Send message to other clients
+		wss.clients.forEach(client => {
+			if (client.readyState === WebSocket.OPEN) {
+				client.send(`${client.id}: ${message}`);
+			}
+		});
+	});
+
+	// Handle disconnection
+	ws.on("close", () => {
+		console.log("Client disconnected");
+
+		wss.clients.forEach(client => {
+			if (client.readyState === WebSocket.OPEN) {
+				client.send(`${client.id} has left the chat`);
+			}
+		});
+	});
 });
 
 console.log(`Real-time app server is running on port ${port}`);

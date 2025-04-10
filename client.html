@@ -2,15 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>WebSocket Client</title>
 </head>
 <body>
 <h1>WebSocket Client</h1>
 <div id="messages"></div>
-<label for="messageInput">Message</label>
-<input type="text" id="messageInput" placeholder="Type your message">
-<button id="sendButton">Send</button>
+<form onsubmit="return false;">
+    <label for="messageInput">Message</label>
+    <input id="messageInput" placeholder="Type your message" type="text">
+    <button id="sendButton">Send</button>
+</form>
 
 <script>
     const messagesDiv = document.getElementById('messages');

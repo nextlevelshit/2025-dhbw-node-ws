@@ -10,7 +10,7 @@
 	},
 	"author": "",
 	"type": "module",
-	"license": "ISC",
+	"license": "WTFPL-2.0",
 	"dependencies": {
 		"ws": "^8.18.1"
 	}

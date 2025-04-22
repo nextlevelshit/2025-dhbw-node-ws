@@ -53,6 +53,12 @@ wss.on("connection", (ws) => {
 					}));
 				}
 				break;
+			case "/clients":
+				// Send the list of connected clients
+				ws.send(JSON.stringify({
+					type: "command", command, clients: Array.from(wss.clients).map(client => client.id)
+				}));
+				break;
 			default:
 				// Send a default message if the command is not recognized
 				ws.send(JSON.stringify({

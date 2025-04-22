@@ -4,14 +4,19 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
+		"dev": "nodemon index.js",
 		"start": "node index.js",
-		"client": "npx wscat -c \"ws://localhost:8081\"",
+		"client": "npx --yes wscat -c \"ws://localhost:8080\"",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"author": "",
 	"type": "module",
 	"license": "WTFPL-2.0",
 	"dependencies": {
+		"axios": "^1.8.4",
 		"ws": "^8.18.1"
+	},
+	"devDependencies": {
+		"nodemon": "^3.1.9"
 	}
 }

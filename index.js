@@ -59,6 +59,26 @@ wss.on("connection", (ws) => {
 					type: "command", command, clients: Array.from(wss.clients).map(client => client.id)
 				}));
 				break;
+			case "/kick":
+				// Kick random client
+				const clientsArray = Array.from(wss.clients);
+				const randomClient = clientsArray[Math.floor(Math.random() * clientsArray.length)];
+				if (randomClient && randomClient.readyState === WebSocket.OPEN) {
+					randomClient.send(JSON.stringify({
+						type: "kick", message: "You have been kicked from the server."
+					}));
+					// Close the connection
+					randomClient.close();
+					// Inform other clients
+					wss.clients.forEach(client => {
+						if (client.readyState === WebSocket.OPEN) {
+							client.send(JSON.stringify({
+								type: "kick", client: randomClient.id, message: "A client has been kicked."
+							}));
+						}
+					});
+				}
+				break;
 			default:
 				// Send a default message if the command is not recognized
 				ws.send(JSON.stringify({

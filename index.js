@@ -5,7 +5,7 @@ import {formatTimeToHumanReadable} from "./src/helpers/formatTimeToHumanReadable
 import {WikipediaApiClient} from "./src/services/WikipediaApiClient.js";
 import {wikipediaApiBaseUrl} from "./src/config/constants.js";
 
-const wss = new WebSocketServer({port: 8080});
+const wss = new WebSocketServer({port: 8081});
 
 wss.on("connection", (ws) => {
 	ws.id = Date.now();
@@ -103,7 +103,7 @@ wss.on("connection", (ws) => {
 
 /**
  * Handles the /time command
- * @returns {Object} - Response object with time and Wikipedia info
+ * @returns {Promise<Object>} - Response object with time and Wikipedia info
  */
 export async function handleTimeCommand() {
 	// Instantiate Wikipedia API client
